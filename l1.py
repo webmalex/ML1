@@ -40,34 +40,38 @@ def main():
     import pandas
     data = pandas.read_csv(p + 'train.csv', index_col='PassengerId')
 
-    def q1():
+    def q1_1():
         d = data['Sex'].value_counts()
-        pf('1', '%s %s' % (d[0], d[1]))
+        pf('1_1', '%s %s' % (d[0], d[1]))
         print(d, '\n')
 
-    def q2():
+    def q1_2():
         d = data['Survived'].value_counts()
         r = round(d[1] / d.sum() * 100, 2)
-        pf('2', r)
+        pf('1_2', r)
         print(d, '\n')
 
-    def q3():
+    def q1_3():
         d = data['Pclass'].value_counts()
         r = round(d[1] / d.sum() * 100, 2)
-        pf('3', r)
+        pf('1_3', r)
         print(d, '\n')
 
-    def q4():
+    def q1_4():
         d = data['Age']
         a = round(d.sum() / d.count(), 2)
         m = d.median()
-        pf('4', '%s %s' % (a, m))
+        pf('1_4', '%s %s' % (a, m))
 
-    def q5():
+    def q1_5():
         d = round(data['SibSp'].corr(data['Parch']), 2)
-        pf('5', d)
+        pf('1_5', d)
 
-    q5()
+    q1_1()
+    q1_2()
+    q1_3()
+    q1_4()
+    q1_5()
 
 
 main()
