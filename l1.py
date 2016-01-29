@@ -29,6 +29,16 @@ def t1():
     print(AB)
 
 
+def t2():
+    import numpy as np
+    from sklearn.tree import DecisionTreeClassifier
+    X = np.array([[1, 2], [3, 4], [5, 6]])
+    y = np.array([0, 1, 0])
+    clf = DecisionTreeClassifier()
+    clf.fit(X, y)
+    importances = clf.feature_importances_
+    print(importances)
+
 def pf(name, value):
     f = open(name + '.txt', 'w')
     f.write(str(value))
@@ -74,4 +84,5 @@ def main():
     q1_5()
 
 
-main()
+# main()
+t2()
