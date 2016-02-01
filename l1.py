@@ -160,7 +160,7 @@ def lesson3():
                 score = sum(scores) / len(scores)
                 # print(i, score, scores)
                 return score
-            l = list(map(test, range(2, 51)))
+            l = list(map(test, range(1, 51)))
             m = max(l)
             return l.index(m) + 1, round(m, 2)
 
