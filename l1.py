@@ -247,6 +247,13 @@ def lesson5():
         print(X_train_scaled)
         print(X_test_scaled)
 
-    t2()
+    def t():
+        # 1
+        from pandas import read_csv
+        df = read_csv('perceptron-train.csv', header=None)
+        dt = read_csv('perceptron-test.csv', header=None)
+        print(df, dt)
+
+    t()
 
 lesson5()
