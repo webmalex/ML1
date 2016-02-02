@@ -240,15 +240,13 @@ def lesson5():
     def t2():
         from sklearn.preprocessing import StandardScaler
         scaler = StandardScaler()
-        xr = np.array([[100.0, 2.0], [50.0, 4.0], [70.0, 6.0]])
-        x1 = scaler.fit_transform(xr)
-        x2 = scaler.transform(xr)
-        print(x1)
-        print(x2)
+        X_train = np.array([[100.0, 2.0], [50.0, 4.0], [70.0, 6.0]])
+        X_test = np.array([[90.0, 1], [40.0, 3], [60.0, 4]])
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        print(X_train_scaled)
+        print(X_test_scaled)
 
-    def t():
-        # from sklearn.preprocessing import StandardScaler
-
-    t()
+    t2()
 
 lesson5()
