@@ -1,3 +1,6 @@
+from builtins import print
+
+
 def t1():
     import numpy as np
     X = np.random.normal(loc=1, scale=10, size=(1000, 50))
@@ -222,4 +225,30 @@ def lesson4():
 
     t1()
 
-lesson4()
+
+def lesson5():
+    import numpy as np
+    def t1():
+        from sklearn.linear_model import Perceptron
+        X = np.array([[1, 2], [3, 4], [5, 6]])
+        y = np.array([0, 1, 0])
+        clf = Perceptron()
+        clf.fit(X, y)
+        predictions = clf.predict(X)
+        print(predictions)
+
+    def t2():
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        xr = np.array([[100.0, 2.0], [50.0, 4.0], [70.0, 6.0]])
+        x1 = scaler.fit_transform(xr)
+        x2 = scaler.transform(xr)
+        print(x1)
+        print(x2)
+
+    def t():
+        # from sklearn.preprocessing import StandardScaler
+
+    t()
+
+lesson5()
