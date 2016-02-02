@@ -187,4 +187,39 @@ def lesson3():
 
     t3()
 
-lesson3()
+def lesson4():
+    def t1():
+        # 1
+        # import sklearn
+        import numpy
+        from sklearn.datasets import load_boston
+        d = load_boston()
+        xr = d.data
+        y = d.target
+        # print(y, x)
+
+        # 2
+        from sklearn.preprocessing import scale
+        x = scale(xr)
+
+        # 3
+        from sklearn import cross_validation, neighbors
+        kf = cross_validation.KFold(len(y), n_folds=5, shuffle=True, random_state=42)
+        def test(p):
+            clf = neighbors.KNeighborsRegressor(n_neighbors=5, weights='distance', metric='minkowski', p=p)
+            scores = cross_validation.cross_val_score(clf, x, y, cv=kf, scoring='mean_squared_error')
+            score = sum(scores) / len(scores)
+            # print(p, score, scores)
+            return score
+        from numpy import linspace
+        ap = linspace(1, 10, num=200)
+        # print(ap)
+        l = list(map(test, ap))
+        m = max(l)
+        pf('4', round(ap[l.index(m)], 1))
+        print(m, l)
+        # return l.index(m) + 1, round(m, 2)
+
+    t1()
+
+lesson4()
