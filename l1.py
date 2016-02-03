@@ -252,7 +252,49 @@ def lesson5():
         from pandas import read_csv
         df = read_csv('perceptron-train.csv', header=None)
         dt = read_csv('perceptron-test.csv', header=None)
-        print(df, dt)
+        yf = df[0]
+        xf = df.drop([0], axis=1)
+        # print(yf, xf)
+        yt = dt[0]
+        xt = dt.drop([0], axis=1)
+        # print(yt, xt)
+
+        # 2
+        from sklearn.linear_model import Perceptron
+        clf = Perceptron(random_state=241)
+        clf.fit(xf, yf)
+        af1 = clf.score(xf, yf)
+        at1 = clf.score(xt, yt)
+        rf = clf.predict(xf)
+        rt = clf.predict(xt)
+        # print(list(yf))
+        # print(pf)
+        # print(list(yt))
+        # print(pt)
+
+        # 3
+        from sklearn.metrics import accuracy_score
+        af = accuracy_score(yf, rf)
+        at = accuracy_score(yt, rt)
+        print(af, at)
+        print(af1, at1)
+
+        # 4
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        xfs = scaler.fit_transform(xf)
+        xts = scaler.transform(xt)
+        clf.fit(xfs, yf)
+        afs1 = clf.score(xfs, yf)
+        ats1 = clf.score(xts, yt)
+        pfs = clf.predict(xfs)
+        pts = clf.predict(xts)
+        afs = accuracy_score(yf, pfs)
+        ats = accuracy_score(yt, pts)
+        print(afs, ats)
+        print(afs1, ats1)
+        pf('5', round(ats - at, 3))
+
 
     t()
 
