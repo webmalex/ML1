@@ -1,5 +1,8 @@
 from builtins import print
+import time
 
+
+# import timeit
 
 def t1():
     import numpy as np
@@ -116,8 +119,8 @@ def lesson2():
         # [ 0.14000522  0.30343647  0.2560461   0.30051221]
         pf('2', 'Fare Sex')
 
-
     t3()
+
 
 def lesson3():
     def t1():
@@ -129,7 +132,6 @@ def lesson3():
         KNeighborsClassifier(...)
         print(neigh.predict([[1.1]]))
         print(neigh.predict_proba([[0.9]]))
-
 
     def t2():
         import numpy as np
@@ -143,11 +145,8 @@ def lesson3():
             # X_train, X_test = X[train_index], X[test_index]
             # y_train, y_test = y[train_index], y[test_index]
 
-
     def t3():
-
         def a(x, y):
-
             # 1.3
             from sklearn import cross_validation
             kf = cross_validation.KFold(len(y), n_folds=5, shuffle=True, random_state=42)
@@ -163,6 +162,7 @@ def lesson3():
                 score = sum(scores) / len(scores)
                 # print(i, score, scores)
                 return score
+
             l = list(map(test, range(1, 51)))
             m = max(l)
             return l.index(m) + 1, round(m, 2)
@@ -190,6 +190,7 @@ def lesson3():
 
     t3()
 
+
 def lesson4():
     def t1():
         # 1
@@ -208,12 +209,14 @@ def lesson4():
         # 3
         from sklearn import cross_validation, neighbors
         kf = cross_validation.KFold(len(y), n_folds=5, shuffle=True, random_state=42)
+
         def test(p):
             clf = neighbors.KNeighborsRegressor(n_neighbors=5, weights='distance', metric='minkowski', p=p)
             scores = cross_validation.cross_val_score(clf, x, y, cv=kf, scoring='mean_squared_error')
             score = sum(scores) / len(scores)
             # print(p, score, scores)
             return score
+
         from numpy import linspace
         ap = linspace(1, 10, num=200)
         # print(ap)
@@ -297,6 +300,7 @@ def lesson5():
 
     t()
 
+
 def lesson6():
     def t1():
         import numpy as np
@@ -317,14 +321,104 @@ def lesson6():
         x = df.drop([0], axis=1)
         # print(df)
 
-        #2
+        # 2
         from sklearn.svm import SVC
         clf = SVC(C=100000, random_state=241)
         clf.fit(x, y)
         print(clf.support_)
-        pf('6', ' '.join([str(x+1) for x in clf.support_]))
+        pf('6', ' '.join([str(x + 1) for x in clf.support_]))
 
     t()
 
 
-lesson6()
+def lesson7():
+    import pickle
+    def pd(f, a):
+        with open(f, 'wb') as handle:
+            pickle.dump(a, handle)
+
+    def pl(f):
+        with open(f, 'rb') as handle:
+            return pickle.load(handle)
+
+    def t1():
+        a = {'hello': 'world'}
+        pd('70.p', a)
+        print(a == pl('70.p'))
+
+    def t():
+        from sklearn import datasets, feature_extraction, svm, grid_search, cross_validation
+
+        # 1
+        newsgroups = datasets.fetch_20newsgroups(
+            subset='all',
+            categories=['alt.atheism', 'sci.space']
+        )
+        xf = newsgroups.data
+        y = newsgroups.target
+        # print(len(xf), yf, len(yf))
+
+        # 2
+        v = feature_extraction.text.TfidfVectorizer()
+        x = v.fit_transform(xf)
+        vn = v.get_feature_names()
+        # print(vn)
+
+        # 3
+        import numpy as np
+        grid = {'C': np.power(10.0, np.arange(-5, 6))}
+        # print(grid)
+
+        def sg():
+            cv = cross_validation.KFold(y.size, n_folds=5, shuffle=True, random_state=241)
+            clf = svm.SVC(kernel='linear', random_state=241)
+            gs = grid_search.GridSearchCV(clf, grid, scoring='accuracy', cv=cv)
+            gs.fit(x, y)
+            r = gs.grid_scores_
+            pd('72.p', r)
+            # print(r.all() == pl('71.p').all())
+            print(r)
+
+        # sg()
+        r = pl('72.p')
+
+        # print(r)
+        # for a in r:
+            # a.mean_validation_score — оценка качества по кросс-валидации
+            # a.parameters — значения параметров
+            # print(a.mean_validation_score, a.parameters)
+            # print(str(a.mean_validation_score))
+        # rm = list(map((lambda x: (x.mean_validation_score, x.parameters['C'])), r))
+        ra = list(map((lambda x: x.mean_validation_score), r))
+        rm = max(ra)
+        ri = ra.index(rm)
+        c = grid['C'][ri]
+        # print(rm, c)
+        # print(ra)
+
+        # 4
+        clf = svm.SVC(C=c, kernel='linear', random_state=241)
+        clf.fit(x, y)
+        co = clf.coef_
+
+        # 5
+
+        # top = np.argsort(co[0]) #[-10:]
+        # top = abs(co.todense()).argpartition(-10)[-10:]
+        top = np.argsort(np.absolute(np.asarray(co.todense())).reshape(-1))[-10:]
+        # print(co[0])
+        # print(top)
+        names = [vn[x] for x in top]
+        print(names)
+        print(names.sort())
+        out = ' '.join(names)
+        # print(out)
+        # cc = clf.support_
+        pf('7', out)
+
+    t()
+
+start_time = time.time()
+lesson7()
+print("--- %s seconds ---" % str(time.time() - start_time))
+# print(timeit.timeit(lesson7(), number=10000)
