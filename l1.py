@@ -295,7 +295,36 @@ def lesson5():
         print(afs1, ats1)
         pf('5', round(ats - at, 3))
 
+    t()
+
+def lesson6():
+    def t1():
+        import numpy as np
+        X = np.array([[-1, -1], [-2, -1], [1, 1], [2, 1]])
+        y = np.array([1, 1, 2, 2])
+        from sklearn.svm import SVC
+        clf = SVC()
+        clf.fit(X, y)
+        print(clf)
+        print(clf.predict([[-0.8, -1]]))
+        print(clf.support_)
+
+    def t():
+        # 1
+        from pandas import read_csv
+        df = read_csv('svm-data.csv', header=None)
+        y = df[0]
+        x = df.drop([0], axis=1)
+        # print(df)
+
+        #2
+        from sklearn.svm import SVC
+        clf = SVC(C=100000, random_state=241)
+        clf.fit(x, y)
+        print(clf.support_)
+        pf('6', ' '.join([str(x+1) for x in clf.support_]))
 
     t()
 
-lesson5()
+
+lesson6()
