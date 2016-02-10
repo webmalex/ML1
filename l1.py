@@ -440,8 +440,8 @@ def lesson8():
         # 2-3-4
         L = len(y)
         S = 1e-5
-        def g(steps = 10000, k = 0.1, C = 0):
-            (w1, w2) = (0, 0)
+        def g(steps = 10000, k = 0.1, C = 10, w1 = 0, w2 = 0):
+            # (w1, w2) = (0, 0)
             s = 0
             while s < steps:
                 i = 0
@@ -464,23 +464,34 @@ def lesson8():
 
         # 5
         from sklearn.metrics import roc_auc_score as auc
-        a = lambda x1, x2: 1 / (1 + exp(-w1 * x1 - w2 * x2))
-        al = lambda: list(map(a, x[1], x[2]))
-        au = lambda: str(round(auc(y, al()), 3))
-        (w1, w2) = g()
-        a1 = au()
-        (w1, w2) = g(C=10)
-        a2 = au()
-        pf('8', a1 + ' ' + a2)
+        def a(**ka):
+            a = lambda x1, x2: 1 / (1 + exp(-w1 * x1 - w2 * x2))
+            al = lambda: list(map(a, x[1], x[2]))
+            au = lambda: auc(y, al())
+            (w1, w2) = g(**ka)
+            return au()
+        def ar(**ka):
+            return str(round(a(**ka), 3))
+        pf('8', ar(C=0) + ' ' + ar())
 
-        # # ||w||
-        # # norm = numpy.linalg.norm( (w1, w2) )
-        # norm = numpy.linalg.norm([w1, w2])
-        # e2 = linalg.norm([[_w1, _w2], [w1, w2]])
+        # 6
+        from numpy import arange
+        for k in range(1, 3):
+            print(a(k=0.1/(10**k)))
+        for k in arange(0.05, 0.15, 0.01):
+            print(a(k=k))
+        # for k in arange(0.2, 1.0, 0.1):
+        #     g(k=k, C=10)
+
+        # 7
+        from numpy import random
+        for v in random.random((3, 2)):
+            print(v, a(w1=v[0], w2=v[1]))
 
 
     def t2():
-        print()
+        from numpy import random
+        print(random.random((3, 2)))
 
     t()
 
