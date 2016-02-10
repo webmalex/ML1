@@ -418,7 +418,73 @@ def lesson7():
 
     t()
 
+def lesson8():
+    def t1():
+        import numpy as np
+        from sklearn.metrics import roc_auc_score
+        y_true = np.array([0, 0, 1, 1])
+        y_scores = np.array([0.1, 0.4, 0.35, 0.8])
+        r = roc_auc_score(y_true, y_scores)
+        print(r)
+
+    def t():
+        # 1
+        from pandas import read_csv
+        # from numpy import linalg, sqrt
+        from math import exp, sqrt
+        df = read_csv('data-logistic.csv', header=None)
+        y = df[0]
+        x = df.drop([0], axis=1)
+        # print(df)
+
+        # 2-3-4
+        L = len(y)
+        S = 1e-5
+        def g(steps = 10000, k = 0.1, C = 0):
+            (w1, w2) = (0, 0)
+            s = 0
+            while s < steps:
+                i = 0
+                (d1, d2) = (0, 0)
+                while i < L:
+                    d = 1 - 1 / (1 + exp(-y[i] * (w1 * x[1][i] + w2 * x[2][i])))
+                    d1 = d1 + y[i] * x[1][i] * d
+                    d2 = d2 + y[i] * x[2][i] * d
+                    i = i + 1
+                _w1 = w1 + (k / L) * d1 - k * C * w1
+                _w2 = w2 + (k / L) * d2 - k * C * w2
+                e = sqrt((_w1 - w1)**2 + (_w2 - w2)**2)
+                (w1, w2) = (_w1, _w2)
+                # print(s, e, w1, w2)
+                if e < S:
+                    break
+                s = s + 1
+            print(k, C, s, e, w1, w2)
+            return w1, w2
+
+        # 5
+        from sklearn.metrics import roc_auc_score as auc
+        a = lambda x1, x2: 1 / (1 + exp(-w1 * x1 - w2 * x2))
+        al = lambda: list(map(a, x[1], x[2]))
+        au = lambda: str(round(auc(y, al()), 3))
+        (w1, w2) = g()
+        a1 = au()
+        (w1, w2) = g(C=10)
+        a2 = au()
+        pf('8', a1 + ' ' + a2)
+
+        # # ||w||
+        # # norm = numpy.linalg.norm( (w1, w2) )
+        # norm = numpy.linalg.norm([w1, w2])
+        # e2 = linalg.norm([[_w1, _w2], [w1, w2]])
+
+
+    def t2():
+        print()
+
+    t()
+
 start_time = time.time()
-lesson7()
+lesson8()
 print("--- %s seconds ---" % str(time.time() - start_time))
 # print(timeit.timeit(lesson7(), number=10000)
