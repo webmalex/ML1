@@ -430,8 +430,8 @@ def lesson8():
     def t():
         # 1
         from pandas import read_csv
-        # from numpy import linalg, sqrt
         from math import exp, sqrt
+        from tqdm import tqdm
         df = read_csv('data-logistic.csv', header=None)
         y = df[0]
         x = df.drop([0], axis=1)
@@ -442,8 +442,7 @@ def lesson8():
         S = 1e-5
         def g(steps = 10000, k = 0.1, C = 10, w1 = 0, w2 = 0):
             # (w1, w2) = (0, 0)
-            s = 0
-            while s < steps:
+            for s in tqdm(range(steps)):
                 i = 0
                 (d1, d2) = (0, 0)
                 while i < L:
@@ -458,7 +457,7 @@ def lesson8():
                 # print(s, e, w1, w2)
                 if e < S:
                     break
-                s = s + 1
+            print()
             print(k, C, s, e, w1, w2)
             return w1, w2
 
@@ -488,10 +487,6 @@ def lesson8():
         for v in random.random((3, 2)):
             print(v, a(w1=v[0], w2=v[1]))
 
-
-    def t2():
-        from numpy import random
-        print(random.random((3, 2)))
 
     t()
 
