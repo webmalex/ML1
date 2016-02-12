@@ -64,7 +64,6 @@ def lesson1():
     q1_4()
     q1_5()
 
-
 def lesson2():
     def t1():
         from sklearn.datasets import load_iris
@@ -108,7 +107,6 @@ def lesson2():
         pf('2', 'Fare Sex')
 
     t3()
-
 
 def lesson3():
     def t1():
@@ -178,7 +176,6 @@ def lesson3():
 
     t3()
 
-
 def lesson4():
     def t1():
         # 1
@@ -215,7 +212,6 @@ def lesson4():
         # return l.index(m) + 1, round(m, 2)
 
     t1()
-
 
 def lesson5():
     import numpy as np
@@ -288,7 +284,6 @@ def lesson5():
 
     t()
 
-
 def lesson6():
     def t1():
         import numpy as np
@@ -317,7 +312,6 @@ def lesson6():
         pf('6', ' '.join([str(x + 1) for x in clf.support_]))
 
     t()
-
 
 def lesson7():
     import pickle
