@@ -6,6 +6,8 @@ def pf(name, value):
     f.close()
     print(name + '="%s"\n' % value)
 
+def pp(l): return ' '.join(map(str, l))
+
 def finish(start):
     print("--- %s seconds ---" % str(time() - start))
 
