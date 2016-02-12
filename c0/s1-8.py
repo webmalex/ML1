@@ -41,7 +41,7 @@ def pf(name, value):
 
 def lesson1():
     import pandas
-    data = pandas.read_csv('train.csv', index_col='PassengerId')
+    data = pandas.read_csv('w1/train.csv', index_col='PassengerId')
 
     def q1_1():
         d = data['Sex'].value_counts()
@@ -85,12 +85,12 @@ def lesson2():
         clf = tree.DecisionTreeClassifier()
         clf = clf.fit(iris.data, iris.target)
         # from sklearn.externals.six import StringIO
-        with open("iris.dot", 'w') as f:
+        with open("w1/iris.dot", 'w') as f:
             f = tree.export_graphviz(clf, out_file=f)
 
         # brew install graphviz
         from os import system
-        system("dot -Tpdf iris.dot -o iris.pdf")
+        system("dot -Tpdf w1/iris.dot -o w1/iris.pdf")
         # from subprocess import call
         # call(["dot", "-Tpdf", "iris.dot", "-o", "iris.pdf"])
 
@@ -106,7 +106,7 @@ def lesson2():
 
     def t3():
         import pandas
-        df = pandas.read_csv('train.csv', index_col='PassengerId')
+        df = pandas.read_csv('w1/train.csv', index_col='PassengerId')
         d = df[['Pclass', 'Fare', 'Age', 'Sex', 'Survived']].dropna().replace('male', 1).replace('female', 0)
         # print(d1)
         from sklearn.tree import DecisionTreeClassifier
@@ -169,7 +169,7 @@ def lesson3():
 
         # 1.1
         import pandas
-        d = pandas.read_csv('wine.data.txt', header=None)
+        d = pandas.read_csv('w2/wine.data.txt', header=None)
 
         # 1.2
         y = d[0]
@@ -253,8 +253,8 @@ def lesson5():
     def t():
         # 1
         from pandas import read_csv
-        df = read_csv('perceptron-train.csv', header=None)
-        dt = read_csv('perceptron-test.csv', header=None)
+        df = read_csv('w2/perceptron-train.csv', header=None)
+        dt = read_csv('w2/perceptron-test.csv', header=None)
         yf = df[0]
         xf = df.drop([0], axis=1)
         # print(yf, xf)
@@ -316,7 +316,7 @@ def lesson6():
     def t():
         # 1
         from pandas import read_csv
-        df = read_csv('svm-data.csv', header=None)
+        df = read_csv('w3/svm-data.csv', header=None)
         y = df[0]
         x = df.drop([0], axis=1)
         # print(df)
@@ -432,7 +432,7 @@ def lesson8():
         from pandas import read_csv
         from math import exp, sqrt
         from tqdm import tqdm
-        df = read_csv('data-logistic.csv', header=None)
+        df = read_csv('w3/data-logistic.csv', header=None)
         y = df[0]
         x = df.drop([0], axis=1)
         # print(df)
@@ -442,7 +442,7 @@ def lesson8():
         S = 1e-5
         def g(steps = 10000, k = 0.1, C = 10, w1 = 0, w2 = 0):
             # (w1, w2) = (0, 0)
-            for s in tqdm(range(steps)):
+            for s in tqdm(xrange(steps)):
                 i = 0
                 (d1, d2) = (0, 0)
                 while i < L:
