@@ -2,3 +2,5 @@
 c0/w7/data
 __pycache__
 *.txt
+salary-train.csv
+.ipynb_checkpoints
