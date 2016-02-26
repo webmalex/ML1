@@ -5,3 +5,4 @@ __pycache__
 salary-train.csv
 .ipynb_checkpoints
 *.pyc
+gbm-data.csv
